@@ -25,7 +25,7 @@ func calc_normals():
 	var tan_vec
 	for i in range (0, target_size):
 		# Populate array of points tangent to strand
-		if (i != target_size-1): tan_vec = (point_array[i+1]-point_array[i]).tangent().normalized()*base_length
+		if (i != target_size-1): tan_vec = point_array[i] - (point_array[i+1]-point_array[i]).tangent().normalized()*base_length
 		normal_array.set(i, tan_vec)
 
 func add_point(position):
@@ -56,16 +56,16 @@ func _ready():
 	
 	
 func _draw():
-	draw_polyline_colors(point_array, color_array, 2.0, true)
+	draw_polyline_colors(normal_array, color_array, 2.0, true)
 	for i in range (0, point_array.size()):
 		# Don't draw balls
 		#draw_circle(point_array[i], 10, color_array[i])
 		
 		# Draw tangent lines
-		draw_line(point_array[i], point_array[i] + normal_array[i], color_array[i], 1.5, true)
+		draw_line(normal_array[i], point_array[i], color_array[i], 1.5, true)
 		if (i == point_array.size()-1):
 			print ("drawing last point at %d %d" % [point_array[i].x, point_array[i].y])
-			draw_circle(point_array[i], 10, color_array[i])
+			#draw_circle(point_array[i], 10, color_array[i])
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
