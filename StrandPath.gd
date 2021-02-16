@@ -6,6 +6,9 @@ var color_choices = [Color(0.0, 1.0, 0.0, 1.0), Color(0.75,0.20,0.0,1.0), Color(
 # Determines which side of the central path we render on
 var which_side = false
 
+# Disable/enable hacky way of drawing alternate side of strand
+var draw_other_side = false
+
 # Distance in pixels between pre-determined points
 var bake_interval = 20
 
@@ -70,6 +73,24 @@ func _ready():
 
 func _draw():
 	draw_polyline_colors(normal_array, color_array, 2.0, true)
+	draw_polyline_colors(normal_array, color_array, 2.0, true)
+	
+	var other_side_array;
+	var other_side_col_array;
+	
+	if (draw_other_side):
+		other_side_array = PoolVector2Array()
+		other_side_col_array = PoolColorArray()
+	
 	for i in range (0, point_array.size()):
 		# Draw tangent lines (between point_array and normal_array)
 		draw_line(normal_array[i], point_array[i], color_array[i], 1.5, true)
+		
+		# Calculate point at opposite side of strand
+		if (draw_other_side):
+			other_side_array.append(point_array[i]*2-normal_array[i])
+			other_side_col_array.append(color_array[(i+2)%4])
+			draw_line(other_side_array[i], point_array[i], other_side_col_array[i], 1.5, true)
+		
+	if (draw_other_side):
+		draw_polyline_colors(other_side_array, other_side_col_array, 2.0, true)
