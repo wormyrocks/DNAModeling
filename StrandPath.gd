@@ -21,24 +21,36 @@ var normal_array = PoolVector2Array()
 # Array of colors (needs to be updated to match array of points)
 var color_array = PoolColorArray()
 
+func calc_normal(point_index):
+	var pt0
+	var pt1
+	if (point_index == 0):
+		pt0 = point_array[point_index]
+		pt1 = point_array[point_index+1]
+	elif (point_index == point_array.size()-1):
+		pt0 = point_array[point_index-1]
+		pt1 = point_array[point_index]
+	else:
+		pt0 = point_array[point_index-1]
+		pt1 = point_array[point_index+1]
+	return ((pt1-pt0).tangent().normalized())*base_length
+
 # Recalculate normal vectors to each point in the strand; probably should be called every time the curve is edited
-func calc_normals():
+func update_normals():
+	point_array = curve.get_baked_points()
 	var target_size = point_array.size()
+	var init_size = normal_array.size() - 1
 	normal_array.resize(target_size)
-	var tan_vec
-	for i in range (0, target_size):
-		# Populate array of points tangent to strand
-		if (i != target_size-1): tan_vec = point_array[i] - (point_array[i+1]-point_array[i]).tangent().normalized()*base_length * ( -1 if which_side else 1)
+	for i in range (init_size, target_size):
+		var tan_vec = point_array[i] - calc_normal(i) * ( -1 if which_side else 1)
 		normal_array.set(i, tan_vec)
 
 func add_point(world_position):
-	curve.add_point(world_position - get_transform().get_origin())
-	point_array = curve.get_baked_points()
+	curve.add_point(world_position - self.position)
 	
 	print("Adding base pair at position %d,%d. Curve now contains %d points." % [position.x, position.y, point_array.size()])
-	
-	# Recalculate normals (inefficient; really only necessary for newly added points)
-	calc_normals()
+
+	update_normals()
 	
 	# Update color array
 	while (color_array.size() < point_array.size()):
@@ -50,20 +62,14 @@ func add_point(world_position):
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	curve.set_bake_interval(bake_interval)
-	point_array = curve.get_baked_points()
+	update_normals()
 	print ("Strand created with %d baked points." % point_array.size())
 	color_array.resize(point_array.size())
 	for i in range (0, point_array.size()):
 		color_array.set(i, color_choices[randi() % 4])
-	calc_normals()
-	
-	
+
 func _draw():
 	draw_polyline_colors(normal_array, color_array, 2.0, true)
-	for i in range (0, point_array.size()):		
+	for i in range (0, point_array.size()):
 		# Draw tangent lines (between point_array and normal_array)
 		draw_line(normal_array[i], point_array[i], color_array[i], 1.5, true)
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
