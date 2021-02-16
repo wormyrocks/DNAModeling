@@ -16,6 +16,7 @@ script = ExtResource( 2 )
 
 [node name="StrandPath" type="Path2D" parent="Strand"]
 self_modulate = Color( 1, 1, 1, 1 )
+position = Vector2( 247.945, -52.0587 )
 scale = Vector2( 1, 0.99861 )
 curve = SubResource( 1 )
 script = ExtResource( 1 )
