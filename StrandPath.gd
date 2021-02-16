@@ -13,7 +13,7 @@ var draw_other_side = false
 var bake_interval = 20
 
 # Length of base pair in pixels
-var base_length = 10
+var base_length = 15
 
 # Array of points
 var point_array
@@ -73,7 +73,6 @@ func _ready():
 
 func _draw():
 	draw_polyline_colors(normal_array, color_array, 2.0, true)
-	draw_polyline_colors(normal_array, color_array, 2.0, true)
 	
 	var other_side_array;
 	var other_side_col_array;
@@ -86,8 +85,8 @@ func _draw():
 		# Draw tangent lines (between point_array and normal_array)
 		draw_line(normal_array[i], point_array[i], color_array[i], 1.5, true)
 		
-		# Calculate point at opposite side of strand
 		if (draw_other_side):
+			# Calculate point at opposite side of strand
 			other_side_array.append(point_array[i]*2-normal_array[i])
 			other_side_col_array.append(color_array[(i+2)%4])
 			draw_line(other_side_array[i], point_array[i], other_side_col_array[i], 1.5, true)
