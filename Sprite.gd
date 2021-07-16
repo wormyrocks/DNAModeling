@@ -15,8 +15,6 @@ var speed = 50
 func _ready():
 	pass # Replace with function body.
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	follow_obj.set_offset(follow_obj.get_offset() + speed*delta)
-#	follow_obj.set_offset(5*delta)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://StrandPath.gd" type="Script" id=1]
+[ext_resource path="res://ParentStrand.gd" type="Script" id=1]
 [ext_resource path="res://Sprite.gd" type="Script" id=2]
 [ext_resource path="res://icon.png" type="Texture" id=3]
 
@@ -10,7 +10,7 @@ _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, -85.1407, 128.328, -34.7058, -97.5789, 34.7058, 97.5789, 263.084, 278.681, 9.34387, -40.1009, -9.34387, 40.1009, 259.679, 443.823, -53.3936, -38.7642, 53.3936, 38.7642, 279, 564, -92.1039, 61.4881, 92.1039, -61.4881, 479.181, 501.007, 0, 0, 0, 0, 679.554, 314.772 )
 }
 
-[node name="StrandPath" type="Path2D"]
+[node name="ParentStrand" type="Path2D"]
 self_modulate = Color( 1, 1, 1, 1 )
 position = Vector2( 247.945, -52.0587 )
 scale = Vector2( 1, 0.99861 )
@@ -18,11 +18,10 @@ curve = SubResource( 1 )
 script = ExtResource( 1 )
 
 [node name="Pathfollow" type="PathFollow2D" parent="."]
-position = Vector2( -21.3738, 141.247 )
-rotation = 0.2237
-offset = 65.0
+position = Vector2( -34.7491, 138.285 )
+rotation = 0.214805
+offset = 51.3445
 
-[node name="Sprite" type="Sprite" parent="Pathfollow"]
-visible = false
+[node name="Polymerase" type="Sprite" parent="Pathfollow"]
 texture = ExtResource( 3 )
 script = ExtResource( 2 )
