@@ -20,8 +20,9 @@ func _ready():
 
 func _input(event):
 	# For debugging
-	#if event is InputEventMouseButton and event.pressed:
-	#	$Strand/StrandPath.add_point(event.position)
+	if event is InputEventMouseButton and event.pressed:
+#		$RigidBody2D.transform = event.position
+		$Strand/StrandPath.add_point(event.position)
 		
 	if event is InputEventMouseMotion:
 		update()

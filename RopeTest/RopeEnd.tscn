@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://icon.png" type="Texture" id=1]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 5.0
+
+[node name="RopeEndPiece" type="RigidBody2D"]
+collision_layer = 0
+collision_mask = 0
+mode = 1
+
+[node name="C" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+disabled = true
+
+[node name="J" type="PinJoint2D" parent="C"]
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.161543, 0.15965 )
+texture = ExtResource( 1 )

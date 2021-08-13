@@ -1,18 +1,44 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ParentStrand.tscn" type="PackedScene" id=1]
 [ext_resource path="res://MainScene.gd" type="Script" id=2]
 [ext_resource path="res://DaughterStrand.tscn" type="PackedScene" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 98.9716, 31.3724 )
 
 [node name="MainScene" type="Node2D"]
 script = ExtResource( 2 )
 ParentStrand = ExtResource( 1 )
 DaughterStrand = ExtResource( 3 )
 
-[node name="Label" type="Label" parent="."]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Click to add base pairs to strand."
-__meta__ = {
-"_edit_use_anchors_": false
-}
+[node name="PinJoint2D" type="PinJoint2D" parent="."]
+visible = false
+position = Vector2( 262.541, 116.798 )
+node_a = NodePath("../RigidBody2D")
+node_b = NodePath("../RigidBody2D2")
+softness = 2.52
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+visible = false
+position = Vector2( 171.267, 116.79 )
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="RigidBody2D"]
+color = Color( 0.603922, 0.0941176, 0.0941176, 1 )
+polygon = PoolVector2Array( -98.8776, -31.5865, -98.8776, 31.0603, 98.7239, 31.0603, 99.3546, -31.5865 )
+
+[node name="RigidBody2D2" type="RigidBody2D" parent="."]
+visible = false
+position = Vector2( 354.237, 117.731 )
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D2"]
+shape = SubResource( 1 )
+
+[node name="Polygon2D" type="Polygon2D" parent="RigidBody2D2"]
+color = Color( 0.145098, 0.0941176, 0.603922, 1 )
+polygon = PoolVector2Array( -98.8776, -31.5865, -98.8776, 31.0603, 98.7239, 31.0603, 99.3546, -31.5865 )

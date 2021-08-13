@@ -20,6 +20,8 @@ var normal_array
 # Array of colors (needs to be updated to match array of points)
 var color_array
 
+var phys_array
+
 var nearest_index = 0
 
 func initialize():
@@ -33,6 +35,9 @@ func initialize():
 	# Set random nucleotides (for now)
 	for i in range (0, point_array.size()):
 		color_array.set(i, randi() % 4)
+		var rb = RigidBody2D.new()
+		add_child(rb)
+	
 
 func calc_normal(point_index):
 	var pt0
